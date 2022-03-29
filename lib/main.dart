@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
+
+import 'screens/homescreen.dart';
+import 'state/drawer_state_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: providers,
+    child: const MyApp(),
+  ),);
 }
+
+List<SingleChildWidget> providers = [
+  ChangeNotifierProvider<DrawerStateProvider>(create: (_) => DrawerStateProvider()),
+];
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -14,21 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: const HomeScreen(),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(), body: const Center());
   }
 }
