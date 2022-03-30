@@ -3,6 +3,7 @@ import 'package:ihcltata/model/drawer_model.dart';
 
 class DrawerStateProvider with ChangeNotifier{
   final drawerList = <DrawerModel>[
+    DrawerModel(title:'HOME'),
     DrawerModel(title:'BRANDS'),
     DrawerModel(title:'COMPANY'),
     DrawerModel(title:'INVESTORS'),
@@ -12,4 +13,13 @@ class DrawerStateProvider with ChangeNotifier{
     DrawerModel(title:'PRESSROOM'),
     DrawerModel(title:'CONTACT'),
   ];
+
+  int _currentDrawer = 0;
+
+  int get getCurrentDrawer => _currentDrawer;
+
+  void setCurrentDrawer(int index) {
+    _currentDrawer = index;
+    notifyListeners();
+  }
 }

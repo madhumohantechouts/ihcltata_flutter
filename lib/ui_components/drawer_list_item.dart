@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 
 class DrawerListItem extends StatelessWidget {
-  DrawerListItem(this.text,this.onPresssed);
-  String text;
+  DrawerListItem(this.title, this.param1);
+String title;
+Function() param1;
 
-  Function onPresssed;
+
+  // final VoidCallback onPresssed;
+  // final void Function()? onPresssed;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children:<Widget>[
         ListTile(
-          title: Text(text),
-          onTap: onPresssed(),
+          title: Text(title),
+         onTap:param1,
         ),
         const Divider(
           thickness: 0.5, // thickness of the line
