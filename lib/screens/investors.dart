@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../investors/carousel.dart';
 import '../ui_components/drawerfile.dart';
 
 class Investors extends StatefulWidget {
@@ -15,11 +16,10 @@ class _InvestorsState extends State<Investors> {
     return Scaffold(
       drawer: DrawerFile(),
       appBar: AppBar(title: const Text('INVESTORS')),
-      body: const Center(
-        child: Text(
-          'INVESTORS',
-          style: TextStyle(fontSize: 20.0),
-        ),
+      body: ListView(
+        children: const <Widget>[
+          Carousel(),
+        ],
       ),
     );
   }

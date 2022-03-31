@@ -48,6 +48,7 @@ class SanityClient {
       path: '$version/data/query/$dataset',
       queryParameters: queryParameters,
     );
+
   }
 
   dynamic _returnResponse(http.Response response) {
@@ -62,11 +63,13 @@ class SanityClient {
         throw UnauthorizedException(response.body.toString());
       case 500:
       default:
-        throw FetchDataException('Error occured while communication with server with status code: ${response.statusCode}');
+        throw FetchDataException(
+            'Error occured while communication with server with status code: ${response.statusCode}');
     }
   }
 
-  Future<dynamic> fetch({required String query, Map<String, dynamic>? params}) async {
+  Future<dynamic> fetch(
+      {required String query, Map<String, dynamic>? params}) async {
     final Uri uri = _buildUri(query: query, params: params);
     final http.Response response = await _client.get(uri);
     return _returnResponse(response);
