@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../investors/agm.dart';
 import '../investors/carousel.dart';
+import '../investors/companyinfo.dart';
+import '../investors/corporate_action.dart';
+import '../investors/corporate_announcements.dart';
+import '../investors/financial_result.dart';
 import '../ui_components/drawerfile.dart';
 
 class Investors extends StatefulWidget {
@@ -19,6 +24,11 @@ class _InvestorsState extends State<Investors> {
       body: ListView(
         children: const <Widget>[
           Carousel(),
+          CompanyInformation(),
+          CorporateAnnouncements(),
+          AGM(),
+          FinancialResult(),
+          CorporateAction(),
         ],
       ),
     );
