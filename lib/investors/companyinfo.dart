@@ -51,12 +51,8 @@ class _CompanyInformationState extends State<CompanyInformation> {
             color: Colors.yellow,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
+              child: Column(
                 children: [
-                  SizedBox(height: 100, width: 100, child: Image.network(dataList[index].image?.url ?? "")),
-                  const SizedBox(
-                    width: 20,
-                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -69,7 +65,11 @@ class _CompanyInformationState extends State<CompanyInformation> {
                       Text(dataList[index].bodySix ?? ""),
                       Text(dataList[index].bodySeven ?? ""),
                     ],
-                  )
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(height: 250, width: 500, child: Image.network(dataList[index].image?.url ?? "")),
                 ],
               ),
             ),
