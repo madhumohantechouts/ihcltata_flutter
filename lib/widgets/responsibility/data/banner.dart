@@ -1,15 +1,15 @@
 class Result {
   Image? image;
-  String? slug;
+  String? text;
 
   Result(
       {
         this.image,
-        this.slug});
+        this.text});
 
   Result.fromJson(Map<String, dynamic> json) {
     image = json['image'] != null ? new Image.fromJson(json['image']) : null;
-    slug = json['slug'];
+    text = json['text'];
   }
 
 }
