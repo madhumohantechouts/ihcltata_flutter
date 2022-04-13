@@ -85,10 +85,7 @@ class _ResponsibilitySoicalDescriptionState extends State<ResponsibilitySoicalDe
                 child: Text(dataList[index].text ?? "",
                 ),
               )
-
-
             ],
-
     );
   }
   @override

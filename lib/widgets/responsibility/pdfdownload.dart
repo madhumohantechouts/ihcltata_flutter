@@ -67,12 +67,10 @@ itemBuild(BuildContext context,int index){
                   // alignment: Alignment.center,
                   onPressed: () {  },
                   child: Text(dataList[index].download??"", style: TextStyle(fontSize: 10,color: Colors.white)),
-
                 ),
               ),
             ],
           ),
-
          ],
       ),
     );
@@ -104,7 +102,6 @@ itemBuild(BuildContext context,int index){
             // color: Colors.grey,
           );
         }
-
     );
   }
 }

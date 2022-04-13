@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.grey,
 
       ),
-      home:const BodyOne(),
+      home:const MyHomePage(),
     );
   }
 }
@@ -35,6 +35,16 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(), body: const Center());
+    return Scaffold(appBar: AppBar(
+    title: Text('ihcl'.toUpperCase()),
+      backgroundColor: Colors.indigo,
+
+leading: Padding(
+  padding: const EdgeInsets.fromLTRB(30.0,0,0,0),
+  child:   new IconButton(onPressed: (
+
+      ){}, icon: new Icon(Icons.format_align_justify)),
+),
+    ), body: BodyOne());
   }
 }
