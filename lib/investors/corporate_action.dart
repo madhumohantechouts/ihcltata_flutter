@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../network/sanity.dart';
 import '../utils/constants.dart';
 import 'json/corporate_action_json.dart';
+import 'store/investors_store.dart';
 
 class CorporateAction extends StatefulWidget {
   const CorporateAction({Key? key}) : super(key: key);
@@ -12,14 +13,14 @@ class CorporateAction extends StatefulWidget {
 }
 
 class _CorporateActionState extends State<CorporateAction> {
-  final SanityClient sanityClient = SanityClient(
+/*  final SanityClient sanityClient = SanityClient(
     projectId: projectId,
     dataset: dataSet,
     useCdn: useCdn,
-  );
-  List<CorporateActionJSON> dataList = [];
+  );*/
+  /*List<CorporateActionJSON> dataList = [];*/
 
-  void _extractCorporateAction() async {
+  /*void _extractCorporateAction() async {
     const String query = '*[_type in ["corporateAction"]]{bodyOneA,bodyOneB,bodyTwoA,bodyTwoB,bodyTwoC,headOne,headOneD,headTwo}';
     List<dynamic> result = await sanityClient.fetch(query: query);
     List<CorporateActionJSON> dataListTemp = List<CorporateActionJSON>.from(
@@ -28,15 +29,23 @@ class _CorporateActionState extends State<CorporateAction> {
     setState(() {
       dataList = dataListTemp;
     });
+  }*/
+
+  final investorsStore = InvestorsStore();
+
+  @override
+  void initState() {
+    investorsStore.extractCorporateAction();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    _extractCorporateAction();
+    /*_extractCorporateAction();*/
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(dataList.length, (index) {
+        children: List.generate(investorsStore.corporateActionList.length, (index) {
           return Card(
             color: Colors.yellow,
             child: Padding(
@@ -46,14 +55,15 @@ class _CorporateActionState extends State<CorporateAction> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(dataList[index].bodyOneA ?? ""),
-                      Text(dataList[index].bodyOneB ?? ""),
-                      Text(dataList[index].bodyTwoA ?? ""),
-                      Text(dataList[index].bodyTwoB ?? ""),
-                      Text(dataList[index].bodyTwoC ?? ""),
-                      Text(dataList[index].headOne ?? ""),
-                      Text(dataList[index].headOneD ?? ""),
-                      Text(dataList[index].headTwo ?? ""),
+                      Text(investorsStore.corporateActionList[index].bodyOneA ?? ""),
+                      Text(investorsStore.corporateActionList[index].bodyOneB ?? ""),
+                      Text(investorsStore.corporateActionList[index].bodyTwoA ?? ""),
+                      Text(investorsStore.corporateActionList[index].bodyTwoB ?? ""),
+                      Text(investorsStore.corporateActionList[index].bodyTwoC ?? ""),
+                      Text(investorsStore.corporateActionList[index].headOne ?? ""),
+                      Text(investorsStore.corporateActionList[index].headOneD ?? ""),
+                      Text(investorsStore.corporateActionList[index].headTwo ?? ""),
+                      // Text(dataList[index].headTwo ?? ""),
                     ],
                   )
                 ],
