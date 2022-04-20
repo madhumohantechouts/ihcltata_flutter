@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
-import '../network/sanity.dart';
-import '../utils/constants.dart';
-import 'json/agm_json.dart';
+import 'store/investors_store.dart';
 
 class AGM extends StatefulWidget {
   const AGM({Key? key}) : super(key: key);
@@ -12,49 +11,43 @@ class AGM extends StatefulWidget {
 }
 
 class _AGMState extends State<AGM> {
-  final SanityClient sanityClient = SanityClient(
-    projectId: projectId,
-    dataset: dataSet,
-    useCdn: useCdn,
-  );
-  List<AGMJSON> dataList = [];
 
-  void _extractAGM() async {
-    const String query = '*[_type in ["agms"]]{bodyOne,bodyTwo,bodyThree}';
-    List<dynamic> result = await sanityClient.fetch(query: query);
-    List<AGMJSON> dataListTemp =
-        List<AGMJSON>.from(result.map((e) => AGMJSON.fromJson(e)));
+  final investorsStore = InvestorsStore();
 
-    setState(() {
-      dataList = dataListTemp;
-    });
+  @override
+  void initState() {
+    investorsStore.extractAGM();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    _extractAGM();
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(dataList.length, (index) {
-          return Card(
-            color: Colors.blue,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return Observer(
+      builder: (BuildContext context) {
+        return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(investorsStore.agmList.length, (index) {
+              return Card(
+                color: Colors.blue,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
                     children: [
-                      Text(dataList[index].bodyOne ?? ""),
-                      Text(dataList[index].bodyTwo ?? ""),
-                      Text(dataList[index].bodyThree ?? ""),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(investorsStore.agmList[index].bodyOne ?? ""),
+                          Text(investorsStore.agmList[index].bodyTwo ?? ""),
+                          Text(investorsStore.agmList[index].bodyThree ?? ""),
+                        ],
+                      )
                     ],
-                  )
-                ],
-              ),
-            ),
-          );
-        }));
+                  ),
+                ),
+              );
+            }));
+      },
+    );
   }
 }

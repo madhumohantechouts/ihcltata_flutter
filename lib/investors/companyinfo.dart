@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
-import '../network/sanity.dart';
-import '../utils/constants.dart';
-import 'json/company_information_json.dart';
+import 'store/investors_store.dart';
 
 
 class CompanyInformation extends StatefulWidget {
@@ -13,67 +12,51 @@ class CompanyInformation extends StatefulWidget {
 }
 
 class _CompanyInformationState extends State<CompanyInformation> {
-  final SanityClient sanityClient = SanityClient(
-    projectId: projectId,
-    dataset: dataSet,
-    useCdn: useCdn,
-  );
-  List<CompanyInformationJSON> dataList = [];
 
-  void _extractcompanyinfo() async {
-    const String query = '*[_type in ["companyInformations"]]{header,bodyOne,bodyTwo,bodyThree,bodyFour,bodyFive,bodySix,bodySeven,image}';
-    List<dynamic> result = await sanityClient.fetch(query: query);
-    List<CompanyInformationJSON> dataListTemp = List<CompanyInformationJSON>.from(
-        result.map((e) => CompanyInformationJSON.fromJson(e)));
-    for (var element in dataListTemp) {
-      var refId = element.image?.asset?.sRef;
-      var parts = refId!.split('-');
-      var id = parts[1];
-      var format = parts[3];
-      var size = parts[2];
-      element.image?.url =
-      "https://cdn.sanity.io/images/$projectId/$dataSet/$id-$size.$format";
-    }
-
-    setState(() {
-      dataList = dataListTemp;
-    });
-  }
+  final investorsStore = InvestorsStore();
 
   @override
+  void initState() {
+    investorsStore.extractCompanyInfo();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    _extractcompanyinfo();
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(dataList.length, (index) {
-          return Card(
-            color: Colors.yellow,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return Observer(
+      builder: (BuildContext context) {
+        return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(investorsStore.companyInformationList.length, (index) {
+              return Card(
+                color: Colors.yellow,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
                     children: [
-                      Text(dataList[index].header ?? ""),
-                      Text(dataList[index].bodyOne ?? ""),
-                      Text(dataList[index].bodyTwo ?? ""),
-                      Text(dataList[index].bodyThree ?? ""),
-                      Text(dataList[index].bodyFour ?? ""),
-                      Text(dataList[index].bodyFive ?? ""),
-                      Text(dataList[index].bodySix ?? ""),
-                      Text(dataList[index].bodySeven ?? ""),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(investorsStore.companyInformationList[index].header ?? ""),
+                          Text(investorsStore.companyInformationList[index].bodyOne ?? ""),
+                          Text(investorsStore.companyInformationList[index].bodyTwo ?? ""),
+                          Text(investorsStore.companyInformationList[index].bodyThree ?? ""),
+                          Text(investorsStore.companyInformationList[index].bodyFour ?? ""),
+                          Text(investorsStore.companyInformationList[index].bodyFive ?? ""),
+                          Text(investorsStore.companyInformationList[index].bodySix ?? ""),
+                          Text(investorsStore.companyInformationList[index].bodySeven ?? ""),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(height: 250, width: 500, child: Image.network(investorsStore.companyInformationList[index].image?.url ?? "")),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(height: 250, width: 500, child: Image.network(dataList[index].image?.url ?? "")),
-                ],
-              ),
-            ),
-          );
-        }));
+                ),
+              );
+            }));
+      },
+    );
   }
 }

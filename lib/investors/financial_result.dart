@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
-import '../network/sanity.dart';
-import '../utils/constants.dart';
-import 'json/financial_result_json.dart';
+import 'store/investors_store.dart';
 
 class FinancialResult extends StatefulWidget {
   const FinancialResult({Key? key}) : super(key: key);
@@ -12,56 +11,50 @@ class FinancialResult extends StatefulWidget {
 }
 
 class _FinancialResultState extends State<FinancialResult> {
-  final SanityClient sanityClient = SanityClient(
-    projectId: projectId,
-    dataset: dataSet,
-    useCdn: useCdn,
-  );
-  List<FinancialResultJSON> dataList = [];
 
-  void _extractfinancialresult() async {
-    const String query = '*[_type in ["financialResult"]]{bodyOneA,bodyOneB,bodyOneC,bodyTwoA,bodyTwoAO,bodyTwoB,bodyTwoBO,footer,headerOne,headerTwo}';
-    List<dynamic> result = await sanityClient.fetch(query: query);
-    List<FinancialResultJSON> dataListTemp = List<FinancialResultJSON>.from(
-        result.map((e) => FinancialResultJSON.fromJson(e)));
+  final investorsStore = InvestorsStore();
 
-    setState(() {
-      dataList = dataListTemp;
-    });
+  @override
+  void initState() {
+    investorsStore.extractFinancialResult();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    _extractfinancialresult();
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(dataList.length, (index) {
-          return Card(
-            color: Colors.cyanAccent,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return Observer(
+      builder: (BuildContext context) {
+        return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(investorsStore.financialResultList.length, (index) {
+              return Card(
+                color: Colors.cyanAccent,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
                     children: [
-                      Text(dataList[index].bodyOneA ?? ""),
-                      Text(dataList[index].bodyOneB ?? ""),
-                      Text(dataList[index].bodyOneC ?? ""),
-                      Text(dataList[index].bodyTwoA ?? ""),
-                      Text(dataList[index].bodyTwoAO ?? ""),
-                      Text(dataList[index].bodyTwoB ?? ""),
-                      Text(dataList[index].bodyTwoBO ?? ""),
-                      Text(dataList[index].footer ?? ""),
-                      Text(dataList[index].headerOne ?? ""),
-                      Text(dataList[index].headerTwo ?? ""),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(investorsStore.financialResultList[index].bodyOneA ?? ""),
+                          Text(investorsStore.financialResultList[index].bodyOneB ?? ""),
+                          Text(investorsStore.financialResultList[index].bodyOneC ?? ""),
+                          Text(investorsStore.financialResultList[index].bodyTwoA ?? ""),
+                          Text(investorsStore.financialResultList[index].bodyTwoAO ?? ""),
+                          Text(investorsStore.financialResultList[index].bodyTwoB ?? ""),
+                          Text(investorsStore.financialResultList[index].bodyTwoBO ?? ""),
+                          Text(investorsStore.financialResultList[index].footer ?? ""),
+                          Text(investorsStore.financialResultList[index].headerOne ?? ""),
+                          Text(investorsStore.financialResultList[index].headerTwo ?? ""),
+                        ],
+                      )
                     ],
-                  )
-                ],
-              ),
-            ),
-          );
-        }));
+                  ),
+                ),
+              );
+            }));
+      },
+    );
   }
 }
