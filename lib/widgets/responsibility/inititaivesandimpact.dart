@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:ihcltata/widgets/responsibility/data/inititaivesandimpactdata.dart';
+import 'package:ihcltata/widgets/responsibility/responsibilty_store.dart';
 
 import '../../network/sanity.dart';
 import '../../utils/constants.dart';
@@ -11,29 +13,22 @@ class InititaivesAndImpact extends StatefulWidget {
 }
 
 class _InititaivesAndImpactState extends State<InititaivesAndImpact> {
-  var text = "";
-  var text1 = "";
-  var text2= "";
-  var title="";
-  List<InititaivesImpactData> dataList=[];
+
+  final inititatives = ResponsibiltyStore();
 
 
-  final SanityClient sanityClient = SanityClient(
-    projectId: projectId,
-    dataset: dataSet,
-    useCdn: useCdn,
-  );
+  // final SanityClient sanityClient = SanityClient(
+  //   projectId: projectId,
+  //   dataset: dataSet,
+  //   useCdn: useCdn,
+  // );
   // List<InititaivesImpactData> dataList = [];
-  void getDescription() async {
-    // print("tapped");
-    const String query = '*[_type == "hrcard"]';
-    List<dynamic> result = await sanityClient.fetch(query: query);
-    List<InititaivesImpactData> dataListTemp = List<InititaivesImpactData>.from(result.map((e) => InititaivesImpactData.fromJson(e)));
-  //  print(dataListTemp);
-    setState(() {
-      dataList=dataListTemp;
-    });
+  @override
+  void initState() {
+    inititatives.getImpact();
+    super.initState();
   }
+
   itemBuild(BuildContext context, int index) {
     return Column(
       children: [
@@ -42,7 +37,7 @@ class _InititaivesAndImpactState extends State<InititaivesAndImpact> {
             padding: const EdgeInsets.all(15.0),
             child: Align(
               alignment: Alignment.topLeft,
-              child:Text(dataList[index].title??"",style:TextStyle(fontSize: 20,)),
+              child:Text(inititatives.impactList[index].title??"",style:TextStyle(fontSize: 20,)),
             ),
           ),
         ),
@@ -50,21 +45,21 @@ class _InititaivesAndImpactState extends State<InititaivesAndImpact> {
           padding: const EdgeInsets.fromLTRB(20.0, 0, 5, 0),
           child: Align(
             // alignment: Alignment.center,
-            child: Text(dataList[index].text??"", style: TextStyle(fontSize: 15,)),
+            child: Text(inititatives.impactList[index].text??"", style: TextStyle(fontSize: 15,)),
           ),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(20.0, 0, 5, 0),
           child: Align(
             alignment: Alignment.topLeft,
-            child: Text(dataList[index].text1??"", style: TextStyle(fontSize: 15,)),
+            child: Text(inititatives.impactList[index].text1??"", style: TextStyle(fontSize: 15,)),
           ),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(20.0, 0, 5, 0),
           child: Align(
             alignment: Alignment.topLeft,
-            child: Text(dataList[index].text2??"", style: TextStyle(fontSize: 15,)),
+            child: Text(inititatives.impactList[index].text2??"", style: TextStyle(fontSize: 15,)),
           ),
         ),
 
@@ -73,24 +68,22 @@ class _InititaivesAndImpactState extends State<InititaivesAndImpact> {
     );
   }
   @override
-  void initState() {
-    getDescription();
-    super.initState();
-  }  @override
   Widget build(BuildContext context) {
-   return ListView.builder(
-       shrinkWrap: true,
-       physics: NeverScrollableScrollPhysics(),
-       padding: EdgeInsets.all(10),
+   return Observer(
+   builder: (_) =>ListView.builder(
+   shrinkWrap: true,
+   physics: NeverScrollableScrollPhysics(),
+   padding: EdgeInsets.all(10),
 
-       itemCount:dataList.length,
+   itemCount:inititatives.impactList.length,
 
-       scrollDirection: Axis.vertical,
+   scrollDirection: Axis.vertical,
 
-       itemBuilder: (context, index) {
-          return dataList.isEmpty ? Container() : itemBuild(context, index);
+   itemBuilder: (context, index) {
+      return inititatives.impactList.isEmpty ? Container() : itemBuild(context, index);
 
-       }
+   }
+   ),
    );
   }
 }

@@ -39,19 +39,111 @@ mixin _$ResponsibiltyStore on _ResponsibiltyStore, Store {
     });
   }
 
+  final _$bannerListAtom = Atom(name: '_ResponsibiltyStore.bannerList');
+
+  @override
+  List<Result> get bannerList {
+    _$bannerListAtom.reportRead();
+    return super.bannerList;
+  }
+
+  @override
+  set bannerList(List<Result> value) {
+    _$bannerListAtom.reportWrite(value, super.bannerList, () {
+      super.bannerList = value;
+    });
+  }
+
+  final _$dataListAtom = Atom(name: '_ResponsibiltyStore.dataList');
+
+  @override
+  List<CorporateSocialResponsibilityData> get dataList {
+    _$dataListAtom.reportRead();
+    return super.dataList;
+  }
+
+  @override
+  set dataList(List<CorporateSocialResponsibilityData> value) {
+    _$dataListAtom.reportWrite(value, super.dataList, () {
+      super.dataList = value;
+    });
+  }
+
+  final _$impactListAtom = Atom(name: '_ResponsibiltyStore.impactList');
+
+  @override
+  List<InititaivesImpactData> get impactList {
+    _$impactListAtom.reportRead();
+    return super.impactList;
+  }
+
+  @override
+  set impactList(List<InititaivesImpactData> value) {
+    _$impactListAtom.reportWrite(value, super.impactList, () {
+      super.impactList = value;
+    });
+  }
+
+  final _$pdfListAtom = Atom(name: '_ResponsibiltyStore.pdfList');
+
+  @override
+  List<PdfDownloadData> get pdfList {
+    _$pdfListAtom.reportRead();
+    return super.pdfList;
+  }
+
+  @override
+  set pdfList(List<PdfDownloadData> value) {
+    _$pdfListAtom.reportWrite(value, super.pdfList, () {
+      super.pdfList = value;
+    });
+  }
+
   final _$getDescriptionAsyncAction =
       AsyncAction('_ResponsibiltyStore.getDescription');
 
   @override
-  Future getDescription() {
+  Future<dynamic> getDescription() {
     return _$getDescriptionAsyncAction.run(() => super.getDescription());
+  }
+
+  final _$getBannerAsyncAction = AsyncAction('_ResponsibiltyStore.getBanner');
+
+  @override
+  Future<dynamic> getBanner() {
+    return _$getBannerAsyncAction.run(() => super.getBanner());
+  }
+
+  final _$getResDataAsyncAction = AsyncAction('_ResponsibiltyStore.getResData');
+
+  @override
+  Future<dynamic> getResData() {
+    return _$getResDataAsyncAction.run(() => super.getResData());
+  }
+
+  final _$getImpactAsyncAction = AsyncAction('_ResponsibiltyStore.getImpact');
+
+  @override
+  Future<dynamic> getImpact() {
+    return _$getImpactAsyncAction.run(() => super.getImpact());
+  }
+
+  final _$getPdfAsyncAction = AsyncAction('_ResponsibiltyStore.getPdf');
+
+  @override
+  Future getPdf() {
+    return _$getPdfAsyncAction.run(() => super.getPdf());
   }
 
   @override
   String toString() {
     return '''
 title: ${title},
-descrip: ${descrip}
+descrip: ${descrip},
+bannerList: ${bannerList},
+dataList: ${dataList},
+impactList: ${impactList},
+pdfList: ${pdfList}
     ''';
   }
 }

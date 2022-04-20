@@ -13,14 +13,14 @@ import 'package:ihcltata/widgets/responsibility/inititaivesandimpact.dart';
 import 'package:ihcltata/widgets/responsibility/pdfdownload.dart';
 import 'package:ihcltata/widgets/responsibility/responsibilitydescription.dart';
 import 'package:ihcltata/widgets/responsibility/responsibilitysocialdescription.dart';
-class BodyOne extends StatefulWidget {
-  const   BodyOne({Key? key}) : super(key: key);
+class Responsibility extends StatefulWidget {
+  const   Responsibility({Key? key}) : super(key: key);
 
   @override
-  State<BodyOne> createState() => _BodyOneState();
+  State<Responsibility> createState() => _ResponsibilityState();
 }
 
-class _BodyOneState extends State<BodyOne> {
+class _ResponsibilityState extends State<Responsibility> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:ihcltata/widgets/responsibility/responsibilty_store.dart';
 
 import '../../network/sanity.dart';
 import '../../utils/constants.dart';
@@ -11,48 +13,16 @@ class ResponsibilitySoicalDescription extends StatefulWidget {
 }
 
 class _ResponsibilitySoicalDescriptionState extends State<ResponsibilitySoicalDescription> {
+  final responsibilitydescrip = ResponsibiltyStore();
 
-  final SanityClient sanityClient = SanityClient(
-    projectId: projectId,
-    dataset: dataSet,
-    useCdn: useCdn,
-  );
-  List<CorporateSocialResponsibilityData> dataList = [];
 
-  void getCounter() async {
-    const String query = '*[_type == "contact"]';
-    /*setState(() {
-      // loader=true;
-    });*/
-
-    List<dynamic> result = await sanityClient.fetch(query: query);
-    /*setState(() {
-      // loader=false;
-    });*/
-
-    List<CorporateSocialResponsibilityData> dataListTemp = List<
-        CorporateSocialResponsibilityData>.from(
-        result.map((e) => CorporateSocialResponsibilityData.fromJson(e)));
-    dataListTemp.forEach((element) {
-      var refId = element.image?.asset?.sRef;
-      var parts = refId!.split('-');
-      var id = parts[1];
-      var format = parts[3];
-      var size = parts[2];
-      element.image?.url =
-      "https://cdn.sanity.io/images/$projectId/$dataSet/$id-$size.$format";
-    });
-
-    setState(() {
-      dataList = dataListTemp;
-    });
-  }
   @override
   void initState() {
     // TODO: implement initState
-    getCounter();
+    responsibilitydescrip.getResData();
     super.initState();
   }
+
   itemBuild(BuildContext context, int index) {
     return Column(
       children: [
@@ -62,43 +32,52 @@ class _ResponsibilitySoicalDescriptionState extends State<ResponsibilitySoicalDe
           decoration: BoxDecoration(
             image: DecorationImage(
 
-              image: NetworkImage(dataList[index].image?.url ?? ""),
+              image: NetworkImage(
+                  responsibilitydescrip.dataList[index].image?.url ?? ""),
               fit: BoxFit.fill,
             ),
           ),
         ),
-              Divider(
-                color: Colors.white,
-                thickness: 10,
-                height: 2,
-              ),
+        const Divider(
+          color: Colors.white,
+          thickness: 10,
+          height: 2,
+        ),
 
         Padding(
           padding: const EdgeInsets.all(15.0),
           child: Align(
             alignment: Alignment.topLeft,
-            child:Text(dataList[index].title??"",style:TextStyle(fontSize: 20,)),
+            child: Text(responsibilitydescrip.dataList[index].title ?? "",
+                style: TextStyle(fontSize: 20,)),
           ),
         ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(dataList[index].text ?? "",
-                ),
-              )
-            ],
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(responsibilitydescrip.dataList[index].text ?? "",
+          ),
+        )
+      ],
     );
   }
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
+
+    @override
+    Widget build(BuildContext context) {
+      return Observer(
+      builder: (_) =>ListView.builder(
       shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.all(10),
-          itemCount:dataList.length,
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, index) {
-            return dataList.isEmpty ? Container() : itemBuild(context, index);
-          }
-    );
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.all(10),
+      itemCount: responsibilitydescrip.dataList.length,
+      scrollDirection: Axis.vertical,
+      itemBuilder: (context, index) {
+        return responsibilitydescrip.dataList.isEmpty
+            ? Container()
+            : itemBuild(context, index);
+      }
+      ),
+      );
+    }
   }
-}
+
+

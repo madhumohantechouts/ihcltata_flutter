@@ -83,7 +83,6 @@ final responsibility=ResponsibiltyStore();
         ),
     ),
         ),
-
       ]
           // Text("Id :.." + id),
           ),

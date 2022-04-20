@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:ihcltata/widgets/responsibility/responsibilty_store.dart';
 
 import '../../network/sanity.dart';
 import '../../utils/constants.dart';
@@ -12,29 +14,11 @@ class PdfDownload extends StatefulWidget {
 }
 
 class _PdfDownloadState extends State<PdfDownload> {
-  var yeardata = "";
-  var download = "";
-
-  List<PdfDownloadData> dataList=[];
-
-
-  final SanityClient sanityClient = SanityClient(
-    projectId: projectId,
-    dataset: dataSet,
-    useCdn: useCdn,
-  );
+  // var yeardata = "";
+  // var download = "";
+  final pdfdownloads = ResponsibiltyStore();
   // List<InititaivesImpactData> dataList = [];
-  void getPdf() async {
-    // print("tapped");
-    const String query = '*[_type == "pdfData"]';
-    List<dynamic> result = await sanityClient.fetch(query: query);
-    List<PdfDownloadData> dataListTemp = List<PdfDownloadData>.from(result.map((e) => PdfDownloadData.fromJson(e)));
-    //  print(dataListTemp);
-    setState(() {
-      dataList=dataListTemp;
-    });
-  }
-itemBuild(BuildContext context,int index){
+ itemBuild(BuildContext context,int index){
     return Container(
       height: 80,
       width: 200,
@@ -54,7 +38,7 @@ itemBuild(BuildContext context,int index){
                       child: Align(
 
                         alignment: Alignment.topLeft,
-                        child:Text(dataList[index].yeardata??"",style:TextStyle(fontSize: 15,)),
+                        child:Text(pdfdownloads.pdfList[index].yeardata ??"",style:TextStyle(fontSize: 15,)),
                       ),
                     ),
                   ],
@@ -66,7 +50,7 @@ itemBuild(BuildContext context,int index){
                   color:Colors.blueAccent,
                   // alignment: Alignment.center,
                   onPressed: () {  },
-                  child: Text(dataList[index].download??"", style: TextStyle(fontSize: 10,color: Colors.white)),
+                  child: Text(pdfdownloads.pdfList[index].download ??"", style: TextStyle(fontSize: 10,color: Colors.white)),
                 ),
               ),
             ],
@@ -78,30 +62,32 @@ itemBuild(BuildContext context,int index){
 }
   @override
   void initState() {
-    getPdf();
+    pdfdownloads.getPdf();
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.all(10),
-        itemCount:dataList.length,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) {
-          return dataList.isEmpty ? Container() : itemBuild(context, index);
-        },
-        separatorBuilder: (context, index) {
-           Spacer(
+    return Observer(
+    builder: (_) =>ListView.separated(
+    shrinkWrap: true,
+    physics: NeverScrollableScrollPhysics(),
+    padding: EdgeInsets.all(10),
+    itemCount:pdfdownloads.pdfList.length,
+    scrollDirection: Axis.vertical,
+    itemBuilder: (context, index) {
+      return pdfdownloads.pdfList.isEmpty ? Container() : itemBuild(context, index);
+    },
+    separatorBuilder: (context, index) {
+       Spacer(
 
-          );
-          return Container(
-            height: 20,
-            width: double.infinity,
-            // color: Colors.grey,
-          );
-        }
+      );
+      return Container(
+        height: 20,
+        width: double.infinity,
+        // color: Colors.grey,
+      );
+    }
+    ),
     );
   }
 }

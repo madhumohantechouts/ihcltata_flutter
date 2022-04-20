@@ -14,7 +14,10 @@ class CorporateSocialResponsibilityData{
     title = json['title'];
   }
 
-
+  @override
+  String toString() {
+    return 'CorporateSocialResponsibilityData{image: $image, text: $text, title: $title}';
+  }
 }
 
 class Image {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ihcltata/body.dart';
+import 'package:ihcltata/resposibility.dart';
 import 'package:ihcltata/widgets/responsibility/responsibilitydescription.dart';
 import '../widgets/responsibility/bannercarousel.dart';
 
@@ -18,9 +18,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.grey,
-
       ),
-      home:const MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
@@ -35,16 +34,16 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(
-    title: Text('ihcl'.toUpperCase()),
-      backgroundColor: Colors.indigo,
-
-leading: Padding(
-  padding: const EdgeInsets.fromLTRB(30.0,0,0,0),
-  child:   new IconButton(onPressed: (
-
-      ){}, icon: new Icon(Icons.format_align_justify)),
-),
-    ), body: BodyOne());
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('ihcl'.toUpperCase()),
+          backgroundColor: Colors.indigo,
+          leading: Padding(
+            padding: const EdgeInsets.fromLTRB(30.0, 0, 0, 0),
+            child: new IconButton(
+                onPressed: () {}, icon: new Icon(Icons.format_align_justify)),
+          ),
+        ),
+        body: Responsibility());
   }
 }
