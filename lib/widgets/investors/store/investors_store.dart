@@ -1,7 +1,7 @@
 import 'package:mobx/mobx.dart';
 
-import '../../network/sanity.dart';
-import '../../utils/constants.dart';
+import '../../../network/sanity.dart';
+import '../../../utils/constants.dart';
 import '../json/agm_json.dart';
 import '../json/carousel_images.dart';
 import '../json/company_announcements.dart';

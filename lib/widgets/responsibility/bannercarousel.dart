@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:ihcltata/widgets/responsibility/responsibilty_store.dart';
 
-import '../../network/sanity.dart';
-import '../../utils/constants.dart';
-import 'data/banner.dart';
-
 class BannerCarousel extends StatefulWidget {
+  const BannerCarousel({Key? key}) : super(key: key);
+
   @override
   State<BannerCarousel> createState() => _BannerCarouselState();
 }
@@ -41,7 +39,7 @@ class _BannerCarouselState extends State<BannerCarousel> {
           alignment: Alignment.center,
           child: Text(
             responsibility.bannerList[index].text ?? "",
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
           )),
     );
@@ -49,24 +47,22 @@ class _BannerCarouselState extends State<BannerCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Observer(
-        builder: (_) => CarouselSlider.builder(
-          options: CarouselOptions(
-            height: 200.0,
-            viewportFraction: 2,
-            autoPlay: true,
-            reverse: false,
-            autoPlayInterval: Duration(seconds: 5),
-            onPageChanged: (index, reason) => setState(() => current = index),
-          ),
-          itemCount: responsibility.bannerList.length,
-          itemBuilder: (context, index, realIndex) {
-            return responsibility.bannerList.isEmpty
-                ? Container()
-                : itemBuild(context, index);
-          },
+    return Observer(
+      builder: (_) => CarouselSlider.builder(
+        options: CarouselOptions(
+          height: 200.0,
+          viewportFraction: 2,
+          autoPlay: true,
+          reverse: false,
+          autoPlayInterval: const Duration(seconds: 5),
+          onPageChanged: (index, reason) => setState(() => current = index),
         ),
+        itemCount: responsibility.bannerList.length,
+        itemBuilder: (context, index, realIndex) {
+          return responsibility.bannerList.isEmpty
+              ? Container()
+              : itemBuild(context, index);
+        },
       ),
     );
   }

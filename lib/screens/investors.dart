@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../investors/agm.dart';
-import '../investors/carousel.dart';
-import '../investors/companyinfo.dart';
-import '../investors/corporate_action.dart';
-import '../investors/corporate_announcements.dart';
-import '../investors/financial_result.dart';
 import '../ui_components/drawerfile.dart';
+import '../widgets/investors/agm.dart';
+import '../widgets/investors/carousel.dart';
+import '../widgets/investors/companyinfo.dart';
+import '../widgets/investors/corporate_action.dart';
+import '../widgets/investors/corporate_announcements.dart';
+import '../widgets/investors/financial_result.dart';
 
 class Investors extends StatefulWidget {
   const Investors({Key? key}) : super(key: key);

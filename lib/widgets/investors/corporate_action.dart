@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-// import 'package:ihcltata/investors/json/corporate_action_json.dart';
-import 'package:ihcltata/investors/store/investors_store.dart';
-// import 'package:ihcltata/network/sanity.dart';
-// import 'package:ihcltata/utils/constants.dart';
+import 'package:ihcltata/widgets/investors/store/investors_store.dart';
+
 
 class CorporateAction extends StatefulWidget {
   const CorporateAction({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:ihcltata/investors/store/investors_store.dart';
+import 'package:ihcltata/widgets/investors/store/investors_store.dart';
 
 class CorporateAnnouncements extends StatefulWidget {
   const CorporateAnnouncements({Key? key}) : super(key: key);
