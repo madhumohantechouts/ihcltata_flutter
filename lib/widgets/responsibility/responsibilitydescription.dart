@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:ihcltata/widgets/responsibility/data/responsibility.dart';
+// import 'package:ihcltata/widgets/responsibility/data/responsibility.dart';
 import 'package:ihcltata/widgets/responsibility/responsibilty_store.dart';
 
-import '../../network/sanity.dart';
-import '../../utils/constants.dart';
-import 'data/banner.dart';
+// import '../../network/sanity.dart';
+// import '../../utils/constants.dart';
+// import 'data/banner.dart';
 
 class ResponsibilityDescription extends StatefulWidget {
   const ResponsibilityDescription({Key? key}) : super(key: key);
@@ -23,7 +23,8 @@ class _ResponsibilityDescriptionState extends State<ResponsibilityDescription> {
   // var descripition = "";
 
   // List<Responsibility> dataList = [];
-final responsibility=ResponsibiltyStore();
+  final responsibility = ResponsibiltyStore();
+
   @override
   void initState() {
     responsibility.getDescription();
@@ -44,10 +45,11 @@ final responsibility=ResponsibiltyStore();
             //   title,
             //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             // ),
-            child:Observer(
+            child: Observer(
               builder: (_) => Text(
                 responsibility.title,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -72,16 +74,14 @@ final responsibility=ResponsibiltyStore();
           child: Align(
             alignment: Alignment.topLeft,
 
-
-
-        // Text(descripition),
-        child:Observer(
-          builder: (_) => Text(
-            responsibility.descrip,
-            style: const TextStyle(fontSize: 15),
+            // Text(descripition),
+            child: Observer(
+              builder: (_) => Text(
+                responsibility.descrip,
+                style: const TextStyle(fontSize: 15),
+              ),
+            ),
           ),
-        ),
-    ),
         ),
       ]
           // Text("Id :.." + id),

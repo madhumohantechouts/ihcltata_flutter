@@ -11,39 +11,16 @@ class CorporateAction extends StatefulWidget {
 }
 
 class _CorporateActionState extends State<CorporateAction> {
-/*
-  final SanityClient sanityClient = SanityClient(
-    projectId: projectId,
-    dataset: dataSet,
-    useCdn: useCdn,
-  );
-  List<CorporateActionJSON> dataList = [];
-
-  void _extractCorporateAction() async {
-    const String query =
-        '*[_type in ["corporateAction"]]{bodyOneA,bodyOneB,bodyTwoA,bodyTwoB,bodyTwoC,headOne,headOneD,headTwo}';
-    List<dynamic> result = await sanityClient.fetch(query: query);
-    List<CorporateActionJSON> dataListTemp = List<CorporateActionJSON>.from(
-        result.map((e) => CorporateActionJSON.fromJson(e)));
-
-    setState(() {
-      dataList = dataListTemp;
-    });
-  }
-*/
-
   final investorsStore = InvestorsStore();
 
   @override
   void initState() {
     investorsStore.extractCorporateAction();
-    // _extractCorporateAction();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    /*_extractCorporateAction();*/
     return Observer(
       builder: (BuildContext context) {
         return Column(
@@ -51,7 +28,6 @@ class _CorporateActionState extends State<CorporateAction> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(investorsStore.corporateActionList.length,
                 (index) {
-              //   children: List.generate(dataList.length, (index) {
               return ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -78,7 +54,6 @@ class _CorporateActionState extends State<CorporateAction> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Text(dataList[index].headTwo ?? ""),
                 Text(investorsStore.corporateActionList[index].bodyOneA ?? ""),
                 Text(investorsStore.corporateActionList[index].bodyOneB ?? ""),
                 Text(investorsStore.corporateActionList[index].bodyTwoA ?? ""),

@@ -11,8 +11,8 @@ import 'screens/development.dart';
 import 'screens/homescreen.dart';
 import 'screens/investors.dart';
 import 'screens/pressroom.dart';
-
 import 'screens/responsibility.dart';
+
 import 'state/drawer_state_provider.dart';
 
 void main() {
@@ -31,8 +31,6 @@ List<SingleChildWidget> providers = [
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-
 
   @override
   Widget build(BuildContext context) {
