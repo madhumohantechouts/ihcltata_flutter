@@ -19,7 +19,7 @@ class DrawerFile extends StatelessWidget {
             height: 100,
           ),
           ListView.builder(
-            itemCount: 8,
+            itemCount: 10,
             // scrollDirection: Axis.vertical,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -29,7 +29,6 @@ class DrawerFile extends StatelessWidget {
                   case 0:
                     drawerstate.setCurrentDrawer(0);
                     Navigator.popAndPushNamed(context, "home");
-                    print(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
                     break;
 
                   case 1:
@@ -45,7 +44,6 @@ class DrawerFile extends StatelessWidget {
                   case 3:
                     drawerstate.setCurrentDrawer(3);
                     Navigator.popAndPushNamed(context, "investors");
-                    print(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
                     break;
 
                   case 4:
@@ -61,7 +59,6 @@ class DrawerFile extends StatelessWidget {
                   case 6:
                     drawerstate.setCurrentDrawer(6);
                     Navigator.popAndPushNamed(context, "careers");
-                    print(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
                     break;
 
                   case 7:
@@ -72,6 +69,11 @@ class DrawerFile extends StatelessWidget {
                   case 8:
                     drawerstate.setCurrentDrawer(8);
                     Navigator.popAndPushNamed(context, "contact");
+                    break;
+
+                  case 9:
+                    drawerstate.setCurrentDrawer(9);
+                    Navigator.popAndPushNamed(context, "shoppersStop");
                     break;
                 }
               });

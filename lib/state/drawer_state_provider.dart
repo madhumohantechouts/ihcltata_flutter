@@ -12,6 +12,7 @@ class DrawerStateProvider with ChangeNotifier{
     DrawerModel(title:'CAREERS'),
     DrawerModel(title:'PRESSROOM'),
     DrawerModel(title:'CONTACT'),
+    DrawerModel(title:'SHOPPERS STOP'),
   ];
 
   int _currentDrawer = 0;

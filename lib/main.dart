@@ -12,6 +12,7 @@ import 'screens/homescreen.dart';
 import 'screens/investors.dart';
 import 'screens/pressroom.dart';
 import 'screens/responsibility.dart';
+import 'screens/shoppers_stop.dart';
 
 import 'state/drawer_state_provider.dart';
 
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
           "careers": (_) => const Careers(),
           "pressroom": (_) => const PressRoom(),
           "contact": (_) => const Contact(),
+          "shoppersStop": (_) => const ShoppersStop(),
         });
   }
 }
