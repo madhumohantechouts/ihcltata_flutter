@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ihcltata/brands/brands_widgets/body.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,8 +12,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'IHCL',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.white70,
       ),
       home: const MyHomePage(),
     );
@@ -29,6 +32,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(), body: const Center());
+    return Scaffold(
+        body: Ihclbrands());
   }
 }
